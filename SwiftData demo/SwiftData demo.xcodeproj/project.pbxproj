@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		9225CC452CA873E900725180 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 9225CC442CA873E900725180 /* ComposableArchitecture */; };
+		9225CC5A2CA88DA700725180 /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9225CC4D2CA88DA700725180 /* TaskList.swift */; };
+		9225CC5B2CA88DA700725180 /* TaskList+Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9225CC4E2CA88DA700725180 /* TaskList+Mocks.swift */; };
+		9225CC5C2CA88DA700725180 /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9225CC4F2CA88DA700725180 /* TaskListView.swift */; };
+		9225CC5D2CA88DA700725180 /* TaskListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9225CC542CA88DA700725180 /* TaskListUseCase.swift */; };
+		9225CC5E2CA88DA700725180 /* SwiftData_demoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9225CC582CA88DA700725180 /* SwiftData_demoApp.swift */; };
+		9225CC5F2CA88DA700725180 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9225CC522CA88DA700725180 /* Preview Assets.xcassets */; };
+		9225CC602CA88DA700725180 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9225CC562CA88DA700725180 /* Assets.xcassets */; };
+		9225CC652CA88DE900725180 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9225CC632CA88DDC00725180 /* DatabaseManager.swift */; };
+		9225CC6B2CA8960F00725180 /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9225CC6A2CA8960C00725180 /* TaskModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,14 +40,19 @@
 		9225CBF42CA8718800725180 /* SwiftData demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftData demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9225CC052CA8718900725180 /* SwiftData demoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SwiftData demoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9225CC0F2CA8718900725180 /* SwiftData demoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SwiftData demoUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9225CC4D2CA88DA700725180 /* TaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskList.swift; sourceTree = "<group>"; };
+		9225CC4E2CA88DA700725180 /* TaskList+Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TaskList+Mocks.swift"; sourceTree = "<group>"; };
+		9225CC4F2CA88DA700725180 /* TaskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListView.swift; sourceTree = "<group>"; };
+		9225CC522CA88DA700725180 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		9225CC542CA88DA700725180 /* TaskListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListUseCase.swift; sourceTree = "<group>"; };
+		9225CC562CA88DA700725180 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9225CC572CA88DA700725180 /* SwiftData_demo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftData_demo.entitlements; sourceTree = "<group>"; };
+		9225CC582CA88DA700725180 /* SwiftData_demoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftData_demoApp.swift; sourceTree = "<group>"; };
+		9225CC632CA88DDC00725180 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		9225CC6A2CA8960C00725180 /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		9225CBF62CA8718800725180 /* SwiftData demo */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "SwiftData demo";
-			sourceTree = "<group>";
-		};
 		9225CC082CA8718900725180 /* SwiftData demoTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "SwiftData demoTests";
@@ -80,7 +94,7 @@
 		9225CBEB2CA8718800725180 = {
 			isa = PBXGroup;
 			children = (
-				9225CBF62CA8718800725180 /* SwiftData demo */,
+				9225CC592CA88DA700725180 /* SwiftData demo */,
 				9225CC082CA8718900725180 /* SwiftData demoTests */,
 				9225CC122CA8718900725180 /* SwiftData demoUITests */,
 				9225CC432CA873E900725180 /* Frameworks */,
@@ -105,6 +119,71 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9225CC502CA88DA700725180 /* Task List */ = {
+			isa = PBXGroup;
+			children = (
+				9225CC4D2CA88DA700725180 /* TaskList.swift */,
+				9225CC4E2CA88DA700725180 /* TaskList+Mocks.swift */,
+				9225CC4F2CA88DA700725180 /* TaskListView.swift */,
+			);
+			path = "Task List";
+			sourceTree = "<group>";
+		};
+		9225CC512CA88DA700725180 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				9225CC502CA88DA700725180 /* Task List */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		9225CC532CA88DA700725180 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				9225CC522CA88DA700725180 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		9225CC552CA88DA700725180 /* Use Cases */ = {
+			isa = PBXGroup;
+			children = (
+				9225CC542CA88DA700725180 /* TaskListUseCase.swift */,
+			);
+			path = "Use Cases";
+			sourceTree = "<group>";
+		};
+		9225CC592CA88DA700725180 /* SwiftData demo */ = {
+			isa = PBXGroup;
+			children = (
+				9225CC662CA88EC200725180 /* Database Manager */,
+				9225CC512CA88DA700725180 /* Features */,
+				9225CC532CA88DA700725180 /* Preview Content */,
+				9225CC552CA88DA700725180 /* Use Cases */,
+				9225CC562CA88DA700725180 /* Assets.xcassets */,
+				9225CC572CA88DA700725180 /* SwiftData_demo.entitlements */,
+				9225CC582CA88DA700725180 /* SwiftData_demoApp.swift */,
+			);
+			path = "SwiftData demo";
+			sourceTree = "<group>";
+		};
+		9225CC662CA88EC200725180 /* Database Manager */ = {
+			isa = PBXGroup;
+			children = (
+				9225CC692CA895FF00725180 /* Models */,
+				9225CC632CA88DDC00725180 /* DatabaseManager.swift */,
+			);
+			path = "Database Manager";
+			sourceTree = "<group>";
+		};
+		9225CC692CA895FF00725180 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9225CC6A2CA8960C00725180 /* TaskModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -119,9 +198,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				9225CBF62CA8718800725180 /* SwiftData demo */,
 			);
 			name = "SwiftData demo";
 			packageProductDependencies = (
@@ -229,6 +305,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9225CC5F2CA88DA700725180 /* Preview Assets.xcassets in Resources */,
+				9225CC602CA88DA700725180 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +331,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9225CC5A2CA88DA700725180 /* TaskList.swift in Sources */,
+				9225CC5B2CA88DA700725180 /* TaskList+Mocks.swift in Sources */,
+				9225CC652CA88DE900725180 /* DatabaseManager.swift in Sources */,
+				9225CC5C2CA88DA700725180 /* TaskListView.swift in Sources */,
+				9225CC5D2CA88DA700725180 /* TaskListUseCase.swift in Sources */,
+				9225CC6B2CA8960F00725180 /* TaskModel.swift in Sources */,
+				9225CC5E2CA88DA700725180 /* SwiftData_demoApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
