@@ -53,7 +53,7 @@ struct TaskListView: View {
           .animation(.spring(), value: showAddTaskPopup)
         }
         .edgesIgnoringSafeArea(.bottom)
-        .padding(.bottom, 5)
+        .padding(.bottom, 1)
       }
     }
     .background(.white)
