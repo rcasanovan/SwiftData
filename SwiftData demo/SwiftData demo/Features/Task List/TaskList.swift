@@ -16,6 +16,7 @@ public struct TaskList {
     case didReceiveError(Task.Error)
     case didReceiveTaskList([Task])
     case didReload
+    case didTapOnAddTask(String)
     case onAppear
   }
 
@@ -35,6 +36,11 @@ public struct TaskList {
         return .none
       case .didReload:
         return self.loadEffect()
+      case .didTapOnAddTask(let title):
+        return .merge(
+          self.saveTaskEffect(Task(title: title)),
+          self.loadEffect()
+        )
       case .onAppear:
         return self.loadEffect()
       }

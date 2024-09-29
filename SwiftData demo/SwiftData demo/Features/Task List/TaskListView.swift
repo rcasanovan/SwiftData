@@ -2,6 +2,10 @@ import ComposableArchitecture
 import SwiftUI
 
 struct TaskListView: View {
+  @State private var showAddTaskPopup = false
+  @State private var inputText = ""
+  @StateObject private var keyboardResponder = KeyboardResponder()
+
   private var store: StoreOf<TaskList>
 
   public init(store: StoreOf<TaskList>) {
@@ -15,18 +19,44 @@ struct TaskListView: View {
       // Scrollable content
       ScrollView {
         VStack(spacing: 0) {
-          Spacer().frame(height: 75)
+          Spacer().frame(height: 60)
 
           ForEach(store.tasks, id: \.self) { task in
-            Text(task.title)
-              .foregroundColor(.white)
-              .frame(maxWidth: .infinity)
-              .frame(height: 140)
+            TaskView(taskTitle: task.title)
+            separator()
           }
         }
       }
+
+      // Sticky Header
+      HeaderView(
+        deleteAllOnTap: {},
+        addNewTaskOnTap: { showAddTaskPopup = true }
+      )
+      .background(Color.white)
+
+      if showAddTaskPopup {
+        VStack {
+          Spacer()  // Push the popup to the bottom
+
+          AddTaskView(
+            showPopup: $showAddTaskPopup,
+            inputText: $inputText,
+            onAccept: {
+              store.send(.didTapOnAddTask(inputText))
+              inputText = ""
+            }
+          )
+          .frame(height: 190)
+          .background(Color.white)
+          .transition(.move(edge: .bottom))
+          .animation(.spring(), value: showAddTaskPopup)
+        }
+        .edgesIgnoringSafeArea(.bottom)
+        .padding(.bottom, 5)
+      }
     }
-    .background(.black)
+    .background(.white)
   }
 
   //__ This is the body for the view
@@ -35,6 +65,15 @@ struct TaskListView: View {
       .onAppear {
         store.send(.onAppear)
       }
+  }
+}
+
+extension TaskListView {
+  fileprivate func separator() -> some View {
+    Divider()
+      .frame(height: 1)
+      .background(.gray)
+      .padding(.leading)
   }
 }
 
