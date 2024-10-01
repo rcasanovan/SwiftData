@@ -10,4 +10,8 @@ struct TaskListUseCaseSuccessMock: TaskListUseCase {
   func saveTask(_ task: Task) -> Result<Bool, Task.Error> {
     return .success(true)
   }
+
+  func deleteAllTasks() async -> Result<Bool, Task.Error> {
+    return .success(true)
+  }
 }

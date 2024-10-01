@@ -3,6 +3,7 @@ import SwiftData
 public protocol DatabaseManager {
   func fetchTaskList() async -> Result<[TaskModel], Error>
   func saveTask(id: String, title: String, isCompleted: Bool) async -> Result<Bool, Error>
+  func deleteAllTasks() async -> Result<Bool, Error>
 }
 
 public struct DatabaseManagerImp: DatabaseManager {
@@ -51,6 +52,24 @@ public struct DatabaseManagerImp: DatabaseManager {
       try modelContainer.mainContext.save()
       return .success(true)
     } catch (let error) {
+      return .failure(error)
+    }
+  }
+  @MainActor
+  public func deleteAllTasks() async -> Result<Bool, Error> {
+    do {
+      let context = modelContainer.mainContext
+
+      let allTasks = try context.fetch(FetchDescriptor<TaskModel>())
+
+      for task in allTasks {
+        context.delete(task)
+      }
+
+      try context.save()
+
+      return .success(true)
+    } catch let error {
       return .failure(error)
     }
   }

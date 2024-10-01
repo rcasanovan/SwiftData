@@ -3,6 +3,7 @@ import SwiftUI
 
 struct TaskListView: View {
   @State private var showAddTaskAlert: Bool = false
+  @State private var showDeleteAllTasksAlert: Bool = false
   @State private var inputText = ""
 
   private var store: StoreOf<TaskList>
@@ -29,7 +30,7 @@ struct TaskListView: View {
 
       // Sticky Header
       HeaderView(
-        deleteAllOnTap: {},
+        deleteAllOnTap: { showDeleteAllTasksAlert = true },
         addNewTaskOnTap: { showAddTaskAlert = true }
       )
       .background(Color.white)
@@ -47,14 +48,29 @@ struct TaskListView: View {
         TextField("Task", text: $inputText)
         Button(action: {
           inputText = ""
+          showAddTaskAlert = false
         }) {
           Text("Cancel")
         }
         Button(action: {
           store.send(.didTapOnAddTask(inputText))
+          showAddTaskAlert = false
           inputText = ""
         }) {
           Text("Create")
+        }
+      }
+      .alert("Do you want to delete all the tasks?", isPresented: $showDeleteAllTasksAlert) {
+        Button(action: {
+          showDeleteAllTasksAlert = false
+        }) {
+          Text("Cancel")
+        }
+        Button(action: {
+          store.send(.didTapOnDeleteAllTasks)
+          showDeleteAllTasksAlert = false
+        }) {
+          Text("Delete all")
         }
       }
   }

@@ -13,6 +13,7 @@ public struct TaskList {
     case didReceiveTaskList([Task])
     case didReload
     case didTapOnAddTask(String)
+    case didTapOnDeleteAllTasks
     case onAppear
   }
 
@@ -37,6 +38,12 @@ public struct TaskList {
           self.saveTaskEffect(Task(title: title)),
           self.loadEffect()
         )
+      case .didTapOnDeleteAllTasks:
+        return .merge(
+          self.deleteAllTasksEffect(),
+          self.loadEffect()
+        )
+        return .none
       case .onAppear:
         return self.loadEffect()
       }
@@ -48,6 +55,18 @@ extension TaskList {
   fileprivate func saveTaskEffect(_ task: Task) -> Effect<TaskList.Action> {
     return .run { send in
       let result = await taskListUseCase.saveTask(task)
+      switch result {
+      case .success(let status):
+        return await send(.didReload)
+      case .failure(let error):
+        return await send(.didReceiveError(error))
+      }
+    }
+  }
+
+  fileprivate func deleteAllTasksEffect() -> Effect<TaskList.Action> {
+    return .run { send in
+      let result = await taskListUseCase.deleteAllTasks()
       switch result {
       case .success(let status):
         return await send(.didReload)

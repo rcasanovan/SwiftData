@@ -28,12 +28,14 @@ extension Task {
   public enum Error: Swift.Error, Equatable {
     case cannotLoadTasks(error: String)
     case cannotSaveTask(error: String)
+    case cannotDeleteAllTasks(error: String)
   }
 }
 
 public protocol TaskListUseCase {
   func fetchTaskList() async -> Result<[Task], Task.Error>
   func saveTask(_ task: Task) async -> Result<Bool, Task.Error>
+  func deleteAllTasks() async -> Result<Bool, Task.Error>
 }
 
 public struct TaskListUseCaseImpl: TaskListUseCase {
@@ -69,6 +71,17 @@ public struct TaskListUseCaseImpl: TaskListUseCase {
       return .success(status)
     case .failure(let error):
       return .failure(.cannotSaveTask(error: error.localizedDescription))
+    }
+  }
+
+  public func deleteAllTasks() async -> Result<Bool, Task.Error> {
+    let result = await databaseManager.deleteAllTasks()
+
+    switch result {
+    case .success(let status):
+      return .success(status)
+    case .failure(let error):
+      return .failure(.cannotDeleteAllTasks(error: error.localizedDescription))
     }
   }
 }
