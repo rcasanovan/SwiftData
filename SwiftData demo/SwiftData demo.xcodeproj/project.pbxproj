@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		921A95442CA9EB1600324442 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921A95432CA9EB1600324442 /* TaskView.swift */; };
 		921A95472CA9ED6000324442 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921A95462CA9ED6000324442 /* HeaderView.swift */; };
-		921A954A2CA9F2DA00324442 /* AddTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921A95492CA9F2DA00324442 /* AddTaskView.swift */; };
 		921A954C2CA9F97A00324442 /* KeyboardResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921A954B2CA9F97800324442 /* KeyboardResponder.swift */; };
 		9225CC452CA873E900725180 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 9225CC442CA873E900725180 /* ComposableArchitecture */; };
 		9225CC5A2CA88DA700725180 /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9225CC4D2CA88DA700725180 /* TaskList.swift */; };
@@ -43,7 +42,6 @@
 /* Begin PBXFileReference section */
 		921A95432CA9EB1600324442 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
 		921A95462CA9ED6000324442 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
-		921A95492CA9F2DA00324442 /* AddTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskView.swift; sourceTree = "<group>"; };
 		921A954B2CA9F97800324442 /* KeyboardResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardResponder.swift; sourceTree = "<group>"; };
 		9225CBF42CA8718800725180 /* SwiftData demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftData demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9225CC052CA8718900725180 /* SwiftData demoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SwiftData demoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,14 +113,6 @@
 			path = "Header View";
 			sourceTree = "<group>";
 		};
-		921A95482CA9F2C300324442 /* Add Task View */ = {
-			isa = PBXGroup;
-			children = (
-				921A95492CA9F2DA00324442 /* AddTaskView.swift */,
-			);
-			path = "Add Task View";
-			sourceTree = "<group>";
-		};
 		9225CBEB2CA8718800725180 = {
 			isa = PBXGroup;
 			children = (
@@ -154,7 +144,6 @@
 		9225CC502CA88DA700725180 /* Task List */ = {
 			isa = PBXGroup;
 			children = (
-				921A95482CA9F2C300324442 /* Add Task View */,
 				921A95452CA9ED5100324442 /* Header View */,
 				921A95422CA9EAFB00324442 /* Task View */,
 				9225CC4D2CA88DA700725180 /* TaskList.swift */,
@@ -368,7 +357,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9225CC5A2CA88DA700725180 /* TaskList.swift in Sources */,
-				921A954A2CA9F2DA00324442 /* AddTaskView.swift in Sources */,
 				921A95472CA9ED6000324442 /* HeaderView.swift in Sources */,
 				921A954C2CA9F97A00324442 /* KeyboardResponder.swift in Sources */,
 				9225CC5B2CA88DA700725180 /* TaskList+Mocks.swift in Sources */,

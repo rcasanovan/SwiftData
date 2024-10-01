@@ -2,9 +2,8 @@ import ComposableArchitecture
 import SwiftUI
 
 struct TaskListView: View {
-  @State private var showAddTaskPopup = false
+  @State private var showAddTaskAlert: Bool = false
   @State private var inputText = ""
-  @StateObject private var keyboardResponder = KeyboardResponder()
 
   private var store: StoreOf<TaskList>
 
@@ -31,30 +30,9 @@ struct TaskListView: View {
       // Sticky Header
       HeaderView(
         deleteAllOnTap: {},
-        addNewTaskOnTap: { showAddTaskPopup = true }
+        addNewTaskOnTap: { showAddTaskAlert = true }
       )
       .background(Color.white)
-
-      if showAddTaskPopup {
-        VStack {
-          Spacer()  // Push the popup to the bottom
-
-          AddTaskView(
-            showPopup: $showAddTaskPopup,
-            inputText: $inputText,
-            onAccept: {
-              store.send(.didTapOnAddTask(inputText))
-              inputText = ""
-            }
-          )
-          .frame(height: 190)
-          .background(Color.white)
-          .transition(.move(edge: .bottom))
-          .animation(.spring(), value: showAddTaskPopup)
-        }
-        .edgesIgnoringSafeArea(.bottom)
-        .padding(.bottom, 1)
-      }
     }
     .background(.white)
   }
@@ -64,6 +42,20 @@ struct TaskListView: View {
     content
       .onAppear {
         store.send(.onAppear)
+      }
+      .alert("Enter a new task title", isPresented: $showAddTaskAlert) {
+        TextField("Task", text: $inputText)
+        Button(action: {
+          inputText = ""
+        }) {
+          Text("Cancel")
+        }
+        Button(action: {
+          store.send(.didTapOnAddTask(inputText))
+          inputText = ""
+        }) {
+          Text("Create")
+        }
       }
   }
 }

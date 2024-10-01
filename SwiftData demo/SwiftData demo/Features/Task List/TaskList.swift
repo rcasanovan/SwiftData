@@ -3,15 +3,11 @@ import Foundation
 
 @Reducer
 public struct TaskList {
-  //@Dependency(\.databaseManager) var databaseManager
-
-  //__ The basic state. Feel free to change this if needed.
   @ObservableState
   public struct State: Equatable {
     public var tasks: [Task] = []
   }
 
-  //__ The basic actions. Feel free to change this if needed.
   public enum Action: Equatable {
     case didReceiveError(Task.Error)
     case didReceiveTaskList([Task])
