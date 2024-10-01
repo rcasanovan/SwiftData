@@ -42,7 +42,12 @@ public struct TaskListUseCaseImpl: TaskListUseCase {
   let databaseManager: DatabaseManager
 
   public func fetchTaskList() async -> Result<[Task], Task.Error> {
-    let result = await databaseManager.fetchTaskList()
+    let result = await databaseManager.fetch(
+      ofType: TaskModel.self,
+      sortBy: \TaskModel.createdAt,
+      ascending: false,
+      predicate: nil
+    )
 
     switch result {
     case .success(let dataModel):
@@ -60,11 +65,12 @@ public struct TaskListUseCaseImpl: TaskListUseCase {
   }
 
   public func saveTask(_ task: Task) async -> Result<Bool, Task.Error> {
-    let result = await databaseManager.saveTask(
+    let taskModel = TaskModel(
       id: task.id,
       title: task.title,
       isCompleted: task.isCompleted
     )
+    let result = await databaseManager.save(model: taskModel)
 
     switch result {
     case .success(let status):
@@ -75,7 +81,7 @@ public struct TaskListUseCaseImpl: TaskListUseCase {
   }
 
   public func deleteAllTasks() async -> Result<Bool, Task.Error> {
-    let result = await databaseManager.deleteAllTasks()
+    let result = await databaseManager.deleteAll(ofType: TaskModel.self)
 
     switch result {
     case .success(let status):
