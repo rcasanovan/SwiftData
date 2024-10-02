@@ -74,6 +74,7 @@ struct TaskListView: View {
         }) {
           Text("Create")
         }
+        .disabled(inputText.isEmpty)
       }
       .alert("Do you want to delete all the tasks?", isPresented: $showDeleteAllTasksAlert) {
         Button(action: {
