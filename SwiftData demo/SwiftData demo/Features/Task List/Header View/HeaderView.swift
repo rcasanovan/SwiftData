@@ -54,6 +54,17 @@ extension HeaderView {
 
 // MARK: Previews
 
+struct HeaderView_Preview {
+  struct Preview: View {
+    var body: some View {
+      HeaderView(
+        deleteAllOnTap: {},
+        addNewTaskOnTap: {}
+      )
+    }
+  }
+}
+
 #Preview {
   HeaderView(
     deleteAllOnTap: {},

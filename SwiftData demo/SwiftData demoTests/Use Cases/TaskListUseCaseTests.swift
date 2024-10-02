@@ -35,7 +35,7 @@ struct TaskListUseCaseTests {
       #expect(Bool(false), "El fetch debería fallar")
     case .failure(let error):
       #expect(
-        error == .cannotSaveTask(error: "The operation couldn’t be completed. ( error 0.)"),
+        error == .cannotLoadTasks(error: "The operation couldn’t be completed. ( error 0.)"),
         "El mensaje de error debería coincidir"
       )
     }
@@ -150,4 +150,3 @@ struct TaskListUseCaseTests {
     }
   }
 }
-

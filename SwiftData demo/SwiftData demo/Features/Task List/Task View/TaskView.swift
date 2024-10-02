@@ -15,6 +15,20 @@ struct TaskView: View {
   }
 }
 
+#if DEBUG
+
+// MARK: Previews
+
+struct TaskView_Preview {
+  struct Preview: View {
+    var body: some View {
+      TaskView(taskTitle: "Task title")
+    }
+  }
+}
+
 #Preview {
   TaskView(taskTitle: "Task title")
 }
+
+#endif
