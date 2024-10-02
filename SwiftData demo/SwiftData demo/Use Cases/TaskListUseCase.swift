@@ -4,7 +4,7 @@ public struct Task: Equatable, Identifiable, Hashable {
   public let id: String
   let title: String
 
-  init(title: String, isCompleted: Bool = false) {
+  init(title: String) {
     let combinedID =
       "\(Date().timeIntervalSince1970.description)\(title.replacingOccurrences(of: " ", with: ""))"
     // Hash the combined string to produce a unique identifier
@@ -14,7 +14,7 @@ public struct Task: Equatable, Identifiable, Hashable {
     self.title = title
   }
 
-  init(id: String, title: String, isCompleted: Bool = false) {
+  init(id: String, title: String) {
     self.id = id
     self.title = title
   }
@@ -56,7 +56,7 @@ public struct TaskListUseCaseImpl: TaskListUseCase {
       }
       return .success(tasks)
     case .failure(let error):
-      return .failure(.cannotSaveTask(error: error.localizedDescription))
+      return .failure(.cannotLoadTasks(error: error.localizedDescription))
     }
   }
 

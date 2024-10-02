@@ -35,20 +35,11 @@ public struct TaskList {
       case .didReload:
         return self.loadEffect()
       case .didTapOnAddTask(let title):
-        return .merge(
-          self.saveTaskEffect(Task(title: title)),
-          self.loadEffect()
-        )
+        return self.saveTaskEffect(Task(title: title))
       case .didTapOnDeleteAllTasks:
-        return .merge(
-          self.deleteAllTasksEffect(),
-          self.loadEffect()
-        )
+        return self.deleteAllTasksEffect()
       case .didTapOnDeleteTask(let task):
-        return .merge(
-          self.deleteTaskEffect(task),
-          self.loadEffect()
-        )
+        return self.deleteTaskEffect(task)
       case .onAppear:
         return self.loadEffect()
       }

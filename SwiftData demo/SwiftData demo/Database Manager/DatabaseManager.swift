@@ -18,17 +18,8 @@ public protocol DatabaseManager {
 public struct DatabaseManagerImp: DatabaseManager {
   private let modelContainer: ModelContainer
 
-  init() {
+  init(schema: Schema, modelConfiguration: ModelConfiguration) {
     let modelContainer: ModelContainer
-
-    let schema = Schema([
-      TaskModel.self
-    ])
-
-    let modelConfiguration = ModelConfiguration(
-      schema: schema,
-      isStoredInMemoryOnly: false
-    )
 
     do {
       modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
@@ -110,6 +101,18 @@ public struct DatabaseManagerImp: DatabaseManager {
 
 extension DatabaseManagerImp {
   public static var live: DatabaseManager {
-    DatabaseManagerImp()
+    let schema = Schema([
+      TaskModel.self
+    ])
+
+    let modelConfiguration = ModelConfiguration(
+      schema: schema,
+      isStoredInMemoryOnly: false
+    )
+
+    return DatabaseManagerImp(
+      schema: schema,
+      modelConfiguration: modelConfiguration
+    )
   }
 }

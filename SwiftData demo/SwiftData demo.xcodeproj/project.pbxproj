@@ -20,6 +20,7 @@
 		9225CC602CA88DA700725180 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9225CC562CA88DA700725180 /* Assets.xcassets */; };
 		9225CC652CA88DE900725180 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9225CC632CA88DDC00725180 /* DatabaseManager.swift */; };
 		9225CC6B2CA8960F00725180 /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9225CC6A2CA8960C00725180 /* TaskModel.swift */; };
+		928B0A352CAD9DE000C62F85 /* DatabaseManager+Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928B0A342CAD9DDA00C62F85 /* DatabaseManager+Mocks.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		9225CC582CA88DA700725180 /* SwiftData_demoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftData_demoApp.swift; sourceTree = "<group>"; };
 		9225CC632CA88DDC00725180 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		9225CC6A2CA8960C00725180 /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
+		928B0A342CAD9DDA00C62F85 /* DatabaseManager+Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseManager+Mocks.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -197,6 +199,7 @@
 			children = (
 				9225CC692CA895FF00725180 /* Models */,
 				9225CC632CA88DDC00725180 /* DatabaseManager.swift */,
+				928B0A342CAD9DDA00C62F85 /* DatabaseManager+Mocks.swift */,
 			);
 			path = "Database Manager";
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 				9225CC5D2CA88DA700725180 /* TaskListUseCase.swift in Sources */,
 				9225CC6B2CA8960F00725180 /* TaskModel.swift in Sources */,
 				9225CC5E2CA88DA700725180 /* SwiftData_demoApp.swift in Sources */,
+				928B0A352CAD9DE000C62F85 /* DatabaseManager+Mocks.swift in Sources */,
 				921A95442CA9EB1600324442 /* TaskView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
