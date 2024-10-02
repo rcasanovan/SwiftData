@@ -5,10 +5,13 @@ public protocol DatabaseManager {
   func fetch<Model: PersistentModel, T: Comparable>(
     ofType type: Model.Type,
     sortBy sortKeyPath: KeyPath<Model, T>,
-    ascending: Bool,
-    predicate: Predicate<Model>?
+    ascending: Bool
   ) async -> Result<[Model], Error>
   func save<Model: PersistentModel>(model: Model) async -> Result<Bool, Error>
+  func delete<Model: PersistentModel & IdentifiableModel>(
+    ofType type: Model.Type,
+    withId id: String
+  ) async -> Result<Bool, Error>
   func deleteAll<Model: PersistentModel>(ofType type: Model.Type) async -> Result<Bool, Error>
 }
 
@@ -40,21 +43,14 @@ public struct DatabaseManagerImp: DatabaseManager {
   public func fetch<Model: PersistentModel, T: Comparable>(
     ofType type: Model.Type,
     sortBy sortKeyPath: KeyPath<Model, T>,
-    ascending: Bool,
-    predicate: Predicate<Model>?
+    ascending: Bool
   ) async -> Result<[Model], Error> {
     do {
       let sortDescriptor = SortDescriptor(sortKeyPath, order: ascending ? .forward : .reverse)
 
-      // Descriptor de consulta con filtro (opcional) y ordenación
-      var fetchDescriptor = FetchDescriptor<Model>(
+      let fetchDescriptor = FetchDescriptor<Model>(
         sortBy: [sortDescriptor]
       )
-
-      // Si el filtro existe, lo agregamos al descriptor
-      if let predicate = predicate {
-        fetchDescriptor.predicate = predicate
-      }
 
       let models = try modelContainer.mainContext.fetch(fetchDescriptor)
       return .success(models)
@@ -75,14 +71,33 @@ public struct DatabaseManagerImp: DatabaseManager {
   }
 
   @MainActor
+  public func delete<Model: PersistentModel & IdentifiableModel>(ofType type: Model.Type, withId id: String) async
+    -> Result<Bool, Error>
+  {
+    do {
+      let context = modelContainer.mainContext
+
+      let fetchDescriptor = FetchDescriptor<Model>(
+        predicate: #Predicate { $0.id == id }
+      )
+
+      if let result = try modelContainer.mainContext.fetch(fetchDescriptor).first {
+        context.delete(result)
+        try context.save()
+        return .success(true)
+      } else {
+        return .failure(NSError(domain: "No se encontró un objeto con el ID especificado.", code: 404, userInfo: nil))
+      }
+    } catch let error {
+      return .failure(error)
+    }
+  }
+
+  @MainActor
   public func deleteAll<Model: PersistentModel>(ofType type: Model.Type) async -> Result<Bool, Error> {
     do {
       let context = modelContainer.mainContext
-      let allModels = try context.fetch(FetchDescriptor<Model>())
-
-      for model in allModels {
-        context.delete(model)
-      }
+      try context.delete(model: Model.self)
 
       try context.save()
 

@@ -16,17 +16,25 @@ struct TaskListView: View {
   //__ This content view
   private var content: some View {
     ZStack(alignment: .top) {
-      // Scrollable content
-      ScrollView {
-        VStack(spacing: 0) {
-          Spacer().frame(height: 60)
-
-          ForEach(store.tasks, id: \.self) { task in
-            TaskView(taskTitle: task.title)
-            separator()
-          }
+      // Lista de tareas
+      List {
+        Spacer().frame(height: 37)
+        ForEach(store.tasks, id: \.self) { task in
+          TaskView(taskTitle: task.title)
+            .swipeActions {
+              Button(role: .destructive) {
+                store.send(.didTapOnDeleteTask(task))
+              } label: {
+                Label("Delete", systemImage: "trash")
+              }
+            }
+            .listRowBackground(Color.white)
         }
+        .listRowSeparator(.visible)
       }
+      .listStyle(PlainListStyle())
+      .background(Color.white)
+      .scrollContentBackground(.hidden)
 
       // Sticky Header
       HeaderView(
@@ -36,6 +44,13 @@ struct TaskListView: View {
       .background(Color.white)
     }
     .background(.white)
+  }
+
+  func statusBarHeight() -> CGFloat {
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+      return windowScene.windows.first?.safeAreaInsets.top ?? 0
+    }
+    return 0
   }
 
   //__ This is the body for the view

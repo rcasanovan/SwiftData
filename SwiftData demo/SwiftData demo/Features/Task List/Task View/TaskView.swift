@@ -11,6 +11,7 @@ struct TaskView: View {
       .frame(maxWidth: .infinity, alignment: .leading)
       .foregroundColor(.black)
       .font(.title2)
+      .background(Color.white)
   }
 }
 

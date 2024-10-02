@@ -3,7 +3,6 @@ import Foundation
 public struct Task: Equatable, Identifiable, Hashable {
   public let id: String
   let title: String
-  let isCompleted: Bool
 
   init(title: String, isCompleted: Bool = false) {
     let combinedID =
@@ -13,13 +12,11 @@ public struct Task: Equatable, Identifiable, Hashable {
 
     self.id = String(hashID)
     self.title = title
-    self.isCompleted = isCompleted
   }
 
   init(id: String, title: String, isCompleted: Bool = false) {
     self.id = id
     self.title = title
-    self.isCompleted = isCompleted
   }
 }
 
@@ -35,6 +32,7 @@ extension Task {
 public protocol TaskListUseCase {
   func fetchTaskList() async -> Result<[Task], Task.Error>
   func saveTask(_ task: Task) async -> Result<Bool, Task.Error>
+  func deleteTask(_ task: Task) async -> Result<Bool, Task.Error>
   func deleteAllTasks() async -> Result<Bool, Task.Error>
 }
 
@@ -45,8 +43,7 @@ public struct TaskListUseCaseImpl: TaskListUseCase {
     let result = await databaseManager.fetch(
       ofType: TaskModel.self,
       sortBy: \TaskModel.createdAt,
-      ascending: false,
-      predicate: nil
+      ascending: false
     )
 
     switch result {
@@ -54,8 +51,7 @@ public struct TaskListUseCaseImpl: TaskListUseCase {
       let tasks = dataModel.map { taskModel in
         Task(
           id: taskModel.id,
-          title: taskModel.title,
-          isCompleted: taskModel.isCompleted
+          title: taskModel.title
         )
       }
       return .success(tasks)
@@ -67,10 +63,20 @@ public struct TaskListUseCaseImpl: TaskListUseCase {
   public func saveTask(_ task: Task) async -> Result<Bool, Task.Error> {
     let taskModel = TaskModel(
       id: task.id,
-      title: task.title,
-      isCompleted: task.isCompleted
+      title: task.title
     )
     let result = await databaseManager.save(model: taskModel)
+
+    switch result {
+    case .success(let status):
+      return .success(status)
+    case .failure(let error):
+      return .failure(.cannotSaveTask(error: error.localizedDescription))
+    }
+  }
+
+  public func deleteTask(_ task: Task) async -> Result<Bool, Task.Error> {
+    let result = await databaseManager.delete(ofType: TaskModel.self, withId: task.id)
 
     switch result {
     case .success(let status):
