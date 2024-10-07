@@ -21,11 +21,7 @@ extension Array where Element == Task {
 
 struct TaskListUseCaseSuccessMock: TaskListUseCase {
   func fetchTaskList() -> Result<[Task], Task.Error> {
-    let tasks = [
-      Task(id: "1", title: "Test Task 1"),
-      Task(id: "2", title: "Test Task 2"),
-    ]
-    return .success(tasks)
+      return .success(.mock)
   }
 
   func saveTask(_ task: Task) -> Result<Bool, Task.Error> {
