@@ -1,10 +1,6 @@
 import Foundation
 import SwiftData
 
-public protocol IdentifiableModel {
-  var id: String { get }
-}
-
 @Model
 public class TaskModel: IdentifiableModel {
   @Attribute(.unique) public var id: String
