@@ -78,7 +78,7 @@ extension TaskListView {
   fileprivate func success(with tasks: [Task]) -> some View {
     ZStack(alignment: .top) {
       List {
-        Spacer().frame(height: 37)
+        Spacer().frame(height: 36)
         ForEach(tasks, id: \.self) { task in
           TaskView(taskTitle: task.title)
             .swipeActions {
@@ -101,7 +101,7 @@ extension TaskListView {
         deleteAllOnTap: { showDeleteAllTasksAlert = true },
         addNewTaskOnTap: { showAddTaskAlert = true }
       )
-      .background(Color.white)
+      .background(.white)
     }
     .background(.white)
   }

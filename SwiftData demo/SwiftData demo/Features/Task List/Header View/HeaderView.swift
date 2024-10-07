@@ -34,19 +34,7 @@ struct HeaderView: View {
       }
       .padding([.horizontal, .bottom])
       .background(.white)
-
-      separator()
     }
-  }
-}
-
-extension HeaderView {
-  fileprivate func separator() -> some View {
-    Divider()
-      .frame(height: 1)
-      .background(.gray)
-      .padding(.leading)
-      .padding(.trailing)
   }
 }
 
