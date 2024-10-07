@@ -20,7 +20,7 @@ struct TaskListView: View {
       EmptyView()
     case .completed(.success(let tasks)):
       success(with: tasks)
-    case .completed(.failure(let error)):
+    case .completed(.failure(_)):
       EmptyView()
     case .ready:
       Color.clear

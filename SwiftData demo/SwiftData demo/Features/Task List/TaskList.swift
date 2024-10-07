@@ -34,7 +34,7 @@ public struct TaskList {
   public var body: some Reducer<State, Action> {
     Reduce { state, action in
       switch action {
-      case .didReceiveError(let error):
+      case .didReceiveError(_):
         return .none
       case .didReceiveTaskList(let tasks):
         state.networkState = .completed(.success(tasks))
@@ -64,7 +64,7 @@ extension TaskList {
     return .run { send in
       let result = await taskListUseCase.saveTask(task)
       switch result {
-      case .success(let status):
+      case .success(_):
         return await send(.didReload)
       case .failure(let error):
         return await send(.didReceiveError(error))
@@ -76,7 +76,7 @@ extension TaskList {
     return .run { send in
       let result = await taskListUseCase.deleteTask(task)
       switch result {
-      case .success(let status):
+      case .success(_):
         return await send(.didReload)
       case .failure(let error):
         return await send(.didReceiveError(error))
@@ -88,7 +88,7 @@ extension TaskList {
     return .run { send in
       let result = await taskListUseCase.deleteAllTasks()
       switch result {
-      case .success(let status):
+      case .success(_):
         return await send(.didReload)
       case .failure(let error):
         return await send(.didReceiveError(error))
