@@ -20,6 +20,7 @@
 		9225CC602CA88DA700725180 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9225CC562CA88DA700725180 /* Assets.xcassets */; };
 		9225CC652CA88DE900725180 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9225CC632CA88DDC00725180 /* DatabaseManager.swift */; };
 		9225CC6B2CA8960F00725180 /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9225CC6A2CA8960C00725180 /* TaskModel.swift */; };
+		9257F3182CB439B600C23369 /* NetworkState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9257F3172CB439AE00C23369 /* NetworkState.swift */; };
 		928B0A352CAD9DE000C62F85 /* DatabaseManager+Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928B0A342CAD9DDA00C62F85 /* DatabaseManager+Mocks.swift */; };
 		92B933B12CADF10E00CB0A6B /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 92B933B02CADF10E00CB0A6B /* SnapshotTesting */; };
 /* End PBXBuildFile section */
@@ -50,6 +51,7 @@
 		9225CC582CA88DA700725180 /* SwiftData_demoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftData_demoApp.swift; sourceTree = "<group>"; };
 		9225CC632CA88DDC00725180 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		9225CC6A2CA8960C00725180 /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
+		9257F3172CB439AE00C23369 /* NetworkState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkState.swift; sourceTree = "<group>"; };
 		928B0A342CAD9DDA00C62F85 /* DatabaseManager+Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseManager+Mocks.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -128,6 +130,7 @@
 			children = (
 				921A95452CA9ED5100324442 /* Header View */,
 				921A95422CA9EAFB00324442 /* Task View */,
+				9257F3172CB439AE00C23369 /* NetworkState.swift */,
 				9225CC4D2CA88DA700725180 /* TaskList.swift */,
 				9225CC4E2CA88DA700725180 /* TaskList+Mocks.swift */,
 				9225CC4F2CA88DA700725180 /* TaskListView.swift */,
@@ -306,6 +309,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9257F3182CB439B600C23369 /* NetworkState.swift in Sources */,
 				9225CC5A2CA88DA700725180 /* TaskList.swift in Sources */,
 				921A95472CA9ED6000324442 /* HeaderView.swift in Sources */,
 				921A954C2CA9F97A00324442 /* KeyboardResponder.swift in Sources */,

@@ -15,35 +15,16 @@ struct TaskListView: View {
   @ViewBuilder
   //__ This content view
   private var content: some View {
-    ZStack(alignment: .top) {
-      // Lista de tareas
-      List {
-        Spacer().frame(height: 37)
-        ForEach(store.tasks, id: \.self) { task in
-          TaskView(taskTitle: task.title)
-            .swipeActions {
-              Button(role: .destructive) {
-                store.send(.didTapOnDeleteTask(task))
-              } label: {
-                Label("Delete", systemImage: "trash")
-              }
-            }
-            .listRowBackground(Color.white)
-        }
-        .listRowSeparator(.visible)
-      }
-      .listStyle(PlainListStyle())
-      .background(Color.white)
-      .scrollContentBackground(.hidden)
-
-      // Sticky Header
-      HeaderView(
-        deleteAllOnTap: { showDeleteAllTasksAlert = true },
-        addNewTaskOnTap: { showAddTaskAlert = true }
-      )
-      .background(Color.white)
+    switch store.networkState {
+    case .loading:
+      EmptyView()
+    case .completed(.success(let tasks)):
+      success(with: tasks)
+    case .completed(.failure(let error)):
+      EmptyView()
+    case .ready:
+      Color.clear
     }
-    .background(.white)
   }
 
   func statusBarHeight() -> CGFloat {
@@ -92,6 +73,40 @@ struct TaskListView: View {
   }
 }
 
+// MARK: - States & helpers
+extension TaskListView {
+  fileprivate func success(with tasks: [Task]) -> some View {
+    ZStack(alignment: .top) {
+      List {
+        Spacer().frame(height: 37)
+        ForEach(tasks, id: \.self) { task in
+          TaskView(taskTitle: task.title)
+            .swipeActions {
+              Button(role: .destructive) {
+                store.send(.didTapOnDeleteTask(task))
+              } label: {
+                Label("Delete", systemImage: "trash")
+              }
+            }
+            .listRowBackground(Color.white)
+        }
+        .listRowSeparator(.visible)
+      }
+      .listStyle(PlainListStyle())
+      .background(Color.white)
+      .scrollContentBackground(.hidden)
+
+      // Sticky Header
+      HeaderView(
+        deleteAllOnTap: { showDeleteAllTasksAlert = true },
+        addNewTaskOnTap: { showAddTaskAlert = true }
+      )
+      .background(Color.white)
+    }
+    .background(.white)
+  }
+}
+
 extension TaskListView {
   fileprivate func separator() -> some View {
     Divider()
@@ -107,7 +122,7 @@ extension TaskListView {
   static func make() -> Self {
     TaskListView(
       store: .init(
-        initialState: TaskList.State()
+        initialState: .init(networkState: .ready)
       ) {
         TaskList(
           taskListUseCase: TaskListUseCaseImpl(databaseManager: DatabaseManagerImp.live)
@@ -121,9 +136,18 @@ extension TaskListView {
 
 // MARK: Previews
 
+struct TaskListView_Preview {
+  struct Preview: View {
+    var store: StoreOf<TaskList>
+    var body: some View {
+      TaskListView(store: store)
+    }
+  }
+}
+
 #Preview {
   let store: StoreOf<TaskList> = .init(
-    initialState: TaskList.State()
+    initialState: .success
   ) {
     TaskList(
       taskListUseCase: TaskListUseCaseSuccessMock()

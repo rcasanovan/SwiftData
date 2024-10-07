@@ -5,7 +5,14 @@ import Foundation
 public struct TaskList {
   @ObservableState
   public struct State: Equatable {
-    public var tasks: [Task] = []
+    /// The current network state for the feature
+    public var networkState: NetworkState<[Task], Task.Error>
+
+    public init(
+      networkState: NetworkState<[Task], Task.Error>
+    ) {
+      self.networkState = networkState
+    }
   }
 
   public enum Action: Equatable {
@@ -30,7 +37,7 @@ public struct TaskList {
       case .didReceiveError(let error):
         return .none
       case .didReceiveTaskList(let tasks):
-        state.tasks = tasks
+        state.networkState = .completed(.success(tasks))
         return .none
       case .didReload:
         return self.loadEffect()
@@ -41,6 +48,11 @@ public struct TaskList {
       case .didTapOnDeleteTask(let task):
         return self.deleteTaskEffect(task)
       case .onAppear:
+        guard case .ready = state.networkState else {
+          return .none
+        }
+
+        state.networkState = .loading
         return self.loadEffect()
       }
     }

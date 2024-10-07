@@ -17,13 +17,15 @@ struct TaskListTest {
     let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
 
     let store = TestStore(
-      initialState: TaskList.State()
+      initialState: TaskList.State(networkState: .ready)
     ) {
       TaskList(taskListUseCase: useCase)
     }
 
     // When
-    await store.send(.onAppear)
+    await store.send(.onAppear) {
+      $0.networkState = .loading
+    }
 
     let tasks = [
       Task(id: "1", title: "Task 1"),
@@ -32,7 +34,7 @@ struct TaskListTest {
 
     // Then
     await store.receive(.didReceiveTaskList(tasks)) {
-      $0.tasks = tasks
+      $0.networkState = .completed(.success(tasks))
     }
   }
 
@@ -47,13 +49,15 @@ struct TaskListTest {
     let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
 
     let store = TestStore(
-      initialState: TaskList.State()
+      initialState: TaskList.State(networkState: .ready)
     ) {
       TaskList(taskListUseCase: useCase)
     }
 
     // When
-    await store.send(.onAppear)
+    await store.send(.onAppear) {
+      $0.networkState = .loading
+    }
 
     // Then
     await store.receive(.didReceiveError(.cannotLoadTasks(error: "The operation couldn’t be completed. ( error 0.)")))
@@ -71,7 +75,7 @@ struct TaskListTest {
     let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
 
     let store = TestStore(
-      initialState: TaskList.State()
+      initialState: TaskList.State(networkState: .ready)
     ) {
       TaskList(taskListUseCase: useCase)
     }
@@ -86,7 +90,7 @@ struct TaskListTest {
 
     // Then
     await store.receive(.didReceiveTaskList(tasks)) {
-      $0.tasks = tasks
+      $0.networkState = .completed(.success(tasks))
     }
   }
 
@@ -102,7 +106,7 @@ struct TaskListTest {
     let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
 
     let store = TestStore(
-      initialState: TaskList.State()
+      initialState: TaskList.State(networkState: .ready)
     ) {
       TaskList(taskListUseCase: useCase)
     }
@@ -119,7 +123,7 @@ struct TaskListTest {
     await store.receive(.didReload)
 
     await store.receive(.didReceiveTaskList(tasks)) {
-      $0.tasks = tasks
+      $0.networkState = .completed(.success(tasks))
     }
   }
 
@@ -132,7 +136,7 @@ struct TaskListTest {
     let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
 
     let store = TestStore(
-      initialState: TaskList.State()
+      initialState: TaskList.State(networkState: .ready)
     ) {
       TaskList(taskListUseCase: useCase)
     }
@@ -145,7 +149,9 @@ struct TaskListTest {
     // Then
     await store.receive(.didReload)
 
-    await store.receive(.didReceiveTaskList(tasks))
+    await store.receive(.didReceiveTaskList(tasks)) {
+      $0.networkState = .completed(.success([]))
+    }
   }
 
   @Test @MainActor
@@ -157,7 +163,7 @@ struct TaskListTest {
     let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
 
     let store = TestStore(
-      initialState: TaskList.State()
+      initialState: TaskList.State(networkState: .ready)
     ) {
       TaskList(taskListUseCase: useCase)
     }
@@ -170,6 +176,8 @@ struct TaskListTest {
     // Then
     await store.receive(.didReload)
 
-    await store.receive(.didReceiveTaskList(tasks))
+    await store.receive(.didReceiveTaskList(tasks)) {
+      $0.networkState = .completed(.success(tasks))
+    }
   }
 }
