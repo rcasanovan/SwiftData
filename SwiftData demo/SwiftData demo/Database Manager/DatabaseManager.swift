@@ -62,9 +62,10 @@ public struct DatabaseManagerImp: DatabaseManager {
   }
 
   @MainActor
-  public func delete<Model: PersistentModel & IdentifiableModel>(ofType type: Model.Type, withId id: String) async
-    -> Result<Bool, Error>
-  {
+  public func delete<Model: PersistentModel & IdentifiableModel>(
+    ofType type: Model.Type,
+    withId id: String
+  ) async -> Result<Bool, Error> {
     do {
       let context = modelContainer.mainContext
 
