@@ -8,8 +8,8 @@ struct TaskListUseCaseTests {
   @Test
   func testFetchTaskListSuccess() async throws {
     // Given
-    let mockDatabaseManager = MockDatabaseManager(fetchResult: .success([TaskModel(id: "1", title: "Task 1")]))
-    let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
+    let dataBaseManager = DatabaseManagerMock(fetchResult: .success([TaskModel(id: "1", title: "Task 1")]))
+    let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
 
     // Whwn
     let result = await useCase.fetchTaskList()
@@ -27,8 +27,8 @@ struct TaskListUseCaseTests {
   @Test
   func testFetchTaskListFailure() async throws {
     // Given
-    let mockDatabaseManager = MockDatabaseManager(fetchResult: .failure(NSError(domain: "", code: 0)))
-    let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
+    let dataBaseManager = DatabaseManagerMock(fetchResult: .failure(NSError(domain: "", code: 0)))
+    let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
 
     // When
     let result = await useCase.fetchTaskList()
@@ -48,8 +48,8 @@ struct TaskListUseCaseTests {
   @Test
   func testSaveTaskSuccess() async throws {
     // Given
-    let mockDatabaseManager = MockDatabaseManager(saveResult: .success(true))
-    let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
+    let dataBaseManager = DatabaseManagerMock(saveResult: .success(true))
+    let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
     let task = Task(id: "1", title: "Test Task")
 
     // When
@@ -67,8 +67,8 @@ struct TaskListUseCaseTests {
   @Test
   func testSaveTaskFailure() async throws {
     // Given
-    let mockDatabaseManager = MockDatabaseManager(saveResult: .failure(NSError(domain: "", code: 0)))
-    let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
+    let dataBaseManager = DatabaseManagerMock(saveResult: .failure(NSError(domain: "", code: 0)))
+    let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
     let task = Task(id: "1", title: "Test Task")
 
     // When
@@ -89,8 +89,8 @@ struct TaskListUseCaseTests {
   @Test
   func testDeleteTaskSuccess() async throws {
     // Given
-    let mockDatabaseManager = MockDatabaseManager(deleteResult: .success(true))
-    let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
+    let dataBaseManager = DatabaseManagerMock(deleteResult: .success(true))
+    let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
     let task = Task(id: "1", title: "Test Task")
 
     // When
@@ -108,8 +108,8 @@ struct TaskListUseCaseTests {
   @Test
   func testDeleteTaskFailure() async throws {
     // Given
-    let mockDatabaseManager = MockDatabaseManager(deleteResult: .failure(NSError(domain: "", code: 0)))
-    let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
+    let dataBaseManager = DatabaseManagerMock(deleteResult: .failure(NSError(domain: "", code: 0)))
+    let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
     let task = Task(id: "1", title: "Test Task")
 
     // When
@@ -130,8 +130,8 @@ struct TaskListUseCaseTests {
   @Test
   func testDeleteAllTasksSuccess() async throws {
     // Given
-    let mockDatabaseManager = MockDatabaseManager(deleteAllResult: .success(true))
-    let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
+    let dataBaseManager = DatabaseManagerMock(deleteAllResult: .success(true))
+    let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
 
     // When
     let result = await useCase.deleteAllTasks()
@@ -148,8 +148,8 @@ struct TaskListUseCaseTests {
   @Test
   func testDeleteAllTasksFailure() async throws {
     // Given
-    let mockDatabaseManager = MockDatabaseManager(deleteAllResult: .failure(NSError(domain: "", code: 0)))
-    let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
+    let dataBaseManager = DatabaseManagerMock(deleteAllResult: .failure(NSError(domain: "", code: 0)))
+    let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
 
     // When
     let result = await useCase.deleteAllTasks()

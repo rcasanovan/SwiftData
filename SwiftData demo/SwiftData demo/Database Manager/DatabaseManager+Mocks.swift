@@ -3,7 +3,7 @@ import SwiftData
 
 #if DEBUG
 
-struct MockDatabaseManager: DatabaseManager {
+struct DatabaseManagerMock: DatabaseManager {
   // Variables para almacenar resultados simulados
   var fetchResult: Result<[TaskModel], Error>?
   var saveResult: Result<Bool, Error>?

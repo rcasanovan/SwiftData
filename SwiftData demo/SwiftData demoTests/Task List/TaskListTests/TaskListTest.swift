@@ -8,13 +8,13 @@ struct TaskListTest {
   @Test @MainActor
   func testOnAppearDidReceiveTaskList() async {
     // Given
-    let mockDatabaseManager = MockDatabaseManager(
+    let dataBaseManager = DatabaseManagerMock(
       fetchResult: .success([
         TaskModel(id: "1", title: "Task 1"),
         TaskModel(id: "2", title: "Task 2"),
       ])
     )
-    let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
+    let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
 
     let store = TestStore(
       initialState: TaskList.State(networkState: .ready)
@@ -41,12 +41,12 @@ struct TaskListTest {
   @Test @MainActor
   func testOnAppearDidReceiveError() async {
     // Given
-    let mockDatabaseManager = MockDatabaseManager(
+    let dataBaseManager = DatabaseManagerMock(
       fetchResult: .failure(
         NSError(domain: "", code: 0)
       )
     )
-    let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
+    let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
 
     let store = TestStore(
       initialState: TaskList.State(networkState: .ready)
@@ -66,13 +66,13 @@ struct TaskListTest {
   @Test @MainActor
   func testDidReload() async {
     // Given
-    let mockDatabaseManager = MockDatabaseManager(
+    let dataBaseManager = DatabaseManagerMock(
       fetchResult: .success([
         TaskModel(id: "1", title: "Task 1"),
         TaskModel(id: "2", title: "Task 2"),
       ])
     )
-    let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
+    let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
 
     let store = TestStore(
       initialState: TaskList.State(networkState: .ready)
@@ -97,13 +97,13 @@ struct TaskListTest {
   @Test @MainActor
   func testDidTapOnAddTask() async {
     // Given
-    var mockDatabaseManager = MockDatabaseManager()
-    mockDatabaseManager.saveResult = .success(true)
-    mockDatabaseManager.fetchResult = .success([
+    var dataBaseManager = DatabaseManagerMock()
+    dataBaseManager.saveResult = .success(true)
+    dataBaseManager.fetchResult = .success([
       TaskModel(id: "1", title: "Task 1"),
       TaskModel(id: "2", title: "Task 2"),
     ])
-    let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
+    let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
 
     let store = TestStore(
       initialState: TaskList.State(networkState: .ready)
@@ -130,10 +130,10 @@ struct TaskListTest {
   @Test @MainActor
   func testDidTapOnDeleteAllTasks() async {
     // Given
-    var mockDatabaseManager = MockDatabaseManager()
-    mockDatabaseManager.deleteAllResult = .success(true)
-    mockDatabaseManager.fetchResult = .success([])
-    let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
+    var dataBaseManager = DatabaseManagerMock()
+    dataBaseManager.deleteAllResult = .success(true)
+    dataBaseManager.fetchResult = .success([])
+    let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
 
     let store = TestStore(
       initialState: TaskList.State(networkState: .ready)
@@ -157,10 +157,10 @@ struct TaskListTest {
   @Test @MainActor
   func testDidTapOnDeleteTask() async {
     // Given
-    var mockDatabaseManager = MockDatabaseManager()
-    mockDatabaseManager.deleteResult = .success(true)
-    mockDatabaseManager.fetchResult = .success([])
-    let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
+    var dataBaseManager = DatabaseManagerMock()
+    dataBaseManager.deleteResult = .success(true)
+    dataBaseManager.fetchResult = .success([])
+    let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
 
     let store = TestStore(
       initialState: TaskList.State(networkState: .ready)

@@ -14,7 +14,7 @@ struct TaskListViewTests {
 
   @Test @MainActor
   func testTaskListViewLoadingState() {
-    let mockDatabaseManager = MockDatabaseManager(
+    let dataBaseManager = DatabaseManagerMock(
       fetchResult: .success([
         TaskModel(id: "6", title: "Task 6"),
         TaskModel(id: "5", title: "Task 5"),
@@ -24,7 +24,7 @@ struct TaskListViewTests {
         TaskModel(id: "1", title: "Task 1"),
       ])
     )
-    let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
+    let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
 
     let store = StoreOf<TaskList>(
       initialState: .loading
@@ -45,7 +45,7 @@ struct TaskListViewTests {
 
   @Test @MainActor
   func testTaskListViewSuccessState() {
-    let mockDatabaseManager = MockDatabaseManager(
+    let dataBaseManager = DatabaseManagerMock(
       fetchResult: .success([
         TaskModel(id: "6", title: "Task 6"),
         TaskModel(id: "5", title: "Task 5"),
@@ -55,7 +55,7 @@ struct TaskListViewTests {
         TaskModel(id: "1", title: "Task 1"),
       ])
     )
-    let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
+    let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
 
     let store = StoreOf<TaskList>(
       initialState: .success
@@ -76,12 +76,12 @@ struct TaskListViewTests {
 
   @Test @MainActor
   func testTaskListViewFailureState() {
-    let mockDatabaseManager = MockDatabaseManager(
+    let dataBaseManager = DatabaseManagerMock(
       fetchResult: .failure(
         NSError(domain: "", code: 0)
       )
     )
-    let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
+    let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
 
     let store = StoreOf<TaskList>(
       initialState: .failure
