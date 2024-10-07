@@ -10,18 +10,18 @@ extension TaskList.State {
 
 extension Array where Element == Task {
   static let mock = Self([
-    .init(id: "1", title: "Task 1"),
-    .init(id: "2", title: "Task 2"),
-    .init(id: "3", title: "Task 3"),
-    .init(id: "4", title: "Task 4"),
-    .init(id: "5", title: "Task 5"),
     .init(id: "6", title: "Task 6"),
+    .init(id: "5", title: "Task 5"),
+    .init(id: "4", title: "Task 4"),
+    .init(id: "3", title: "Task 3"),
+    .init(id: "2", title: "Task 2"),
+    .init(id: "1", title: "Task 1"),
   ])
 }
 
 struct TaskListUseCaseSuccessMock: TaskListUseCase {
   func fetchTaskList() -> Result<[Task], Task.Error> {
-      return .success(.mock)
+    return .success(.mock)
   }
 
   func saveTask(_ task: Task) -> Result<Bool, Task.Error> {

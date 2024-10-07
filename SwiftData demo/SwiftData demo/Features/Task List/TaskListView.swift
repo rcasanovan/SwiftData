@@ -73,7 +73,7 @@ struct TaskListView: View {
   }
 }
 
-// MARK: - States & helpers
+// MARK: - States
 extension TaskListView {
   fileprivate func success(with tasks: [Task]) -> some View {
     ZStack(alignment: .top) {
@@ -148,6 +148,28 @@ struct TaskListView_Preview {
 #Preview {
   let store: StoreOf<TaskList> = .init(
     initialState: .success
+  ) {
+    TaskList(
+      taskListUseCase: TaskListUseCaseSuccessMock()
+    )
+  }
+  return TaskListView(store: store)
+}
+
+#Preview {
+  let store: StoreOf<TaskList> = .init(
+    initialState: .failure
+  ) {
+    TaskList(
+      taskListUseCase: TaskListUseCaseSuccessMock()
+    )
+  }
+  return TaskListView(store: store)
+}
+
+#Preview {
+  let store: StoreOf<TaskList> = .init(
+    initialState: .loading
   ) {
     TaskList(
       taskListUseCase: TaskListUseCaseSuccessMock()

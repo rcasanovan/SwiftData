@@ -16,12 +16,12 @@ struct TaskListViewTests {
   func testTaskListViewLoadingState() {
     let mockDatabaseManager = MockDatabaseManager(
       fetchResult: .success([
-        TaskModel(id: "1", title: "Task 1"),
-        TaskModel(id: "2", title: "Task 2"),
-        TaskModel(id: "3", title: "Task 3"),
-        TaskModel(id: "4", title: "Task 4"),
-        TaskModel(id: "5", title: "Task 5"),
         TaskModel(id: "6", title: "Task 6"),
+        TaskModel(id: "5", title: "Task 5"),
+        TaskModel(id: "4", title: "Task 4"),
+        TaskModel(id: "3", title: "Task 3"),
+        TaskModel(id: "2", title: "Task 2"),
+        TaskModel(id: "1", title: "Task 1"),
       ])
     )
     let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
@@ -47,12 +47,12 @@ struct TaskListViewTests {
   func testTaskListViewSuccessState() {
     let mockDatabaseManager = MockDatabaseManager(
       fetchResult: .success([
-        TaskModel(id: "1", title: "Task 1"),
-        TaskModel(id: "2", title: "Task 2"),
-        TaskModel(id: "3", title: "Task 3"),
-        TaskModel(id: "4", title: "Task 4"),
-        TaskModel(id: "5", title: "Task 5"),
         TaskModel(id: "6", title: "Task 6"),
+        TaskModel(id: "5", title: "Task 5"),
+        TaskModel(id: "4", title: "Task 4"),
+        TaskModel(id: "3", title: "Task 3"),
+        TaskModel(id: "2", title: "Task 2"),
+        TaskModel(id: "1", title: "Task 1"),
       ])
     )
     let useCase = TaskListUseCaseImpl(databaseManager: mockDatabaseManager)
