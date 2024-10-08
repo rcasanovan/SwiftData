@@ -2,8 +2,6 @@ import ComposableArchitecture
 import SwiftUI
 
 struct TaskListView: View {
-  @State private var showAddTaskAlert: Bool = false
-  @State private var showDeleteAllTasksAlert: Bool = false
   @State private var inputText = ""
 
   private var store: StoreOf<TaskList>
@@ -36,40 +34,53 @@ struct TaskListView: View {
 
   //__ This is the body for the view
   var body: some View {
-    content
-      .onAppear {
-        store.send(.onAppear)
-      }
-      .alert("Enter a new task title", isPresented: $showAddTaskAlert) {
-        TextField("Task", text: $inputText)
-        Button(action: {
-          inputText = ""
-          showAddTaskAlert = false
-        }) {
-          Text("Cancel")
+    WithViewStore(self.store, observe: \.self) { viewStore in
+      content
+        .onAppear {
+          viewStore.send(.onAppear)
         }
-        Button(action: {
-          store.send(.didTapOnAddTask(inputText))
-          showAddTaskAlert = false
-          inputText = ""
-        }) {
-          Text("Create")
+        .alert(
+          "Enter a new task title",
+          isPresented: viewStore.binding(
+            get: \.showAddTaskAlert,
+            send: TaskList.Action.setShowAddTaskAlert
+          )
+        ) {
+          TextField("Task", text: $inputText)
+          Button(action: {
+            inputText = ""
+            viewStore.send(.setShowAddTaskAlert(false))
+          }) {
+            Text("Cancel")
+          }
+          Button(action: {
+            viewStore.send(.didTapOnAddTask(inputText))
+            viewStore.send(.setShowAddTaskAlert(false))
+            inputText = ""
+          }) {
+            Text("Create")
+          }
         }
-        .disabled(inputText.isEmpty)
-      }
-      .alert("Do you want to delete all the tasks?", isPresented: $showDeleteAllTasksAlert) {
-        Button(action: {
-          showDeleteAllTasksAlert = false
-        }) {
-          Text("Cancel")
+        .alert(
+          "Do you want to delete all the tasks?",
+          isPresented: viewStore.binding(
+            get: \.showDeleteAllTasksAlert,
+            send: TaskList.Action.setShowDeleteAllTasksAlert
+          )
+        ) {
+          Button(action: {
+            viewStore.send(.setShowDeleteAllTasksAlert(false))
+          }) {
+            Text("Cancel")
+          }
+          Button(action: {
+            viewStore.send(.didTapOnDeleteAllTasks)
+            viewStore.send(.setShowDeleteAllTasksAlert(false))
+          }) {
+            Text("Delete all")
+          }
         }
-        Button(action: {
-          store.send(.didTapOnDeleteAllTasks)
-          showDeleteAllTasksAlert = false
-        }) {
-          Text("Delete all")
-        }
-      }
+    }
   }
 }
 
@@ -98,8 +109,12 @@ extension TaskListView {
 
       // Sticky Header
       HeaderView(
-        deleteAllOnTap: { showDeleteAllTasksAlert = true },
-        addNewTaskOnTap: { showAddTaskAlert = true }
+        deleteAllOnTap: {
+          store.send(.setShowDeleteAllTasksAlert(true))
+        },
+        addNewTaskOnTap: {
+          store.send(.setShowAddTaskAlert(true))
+        }
       )
       .background(.white)
     }
@@ -170,6 +185,28 @@ struct TaskListView_Preview {
 #Preview {
   let store: StoreOf<TaskList> = .init(
     initialState: .loading
+  ) {
+    TaskList(
+      taskListUseCase: TaskListUseCaseSuccessMock()
+    )
+  }
+  return TaskListView(store: store)
+}
+
+#Preview {
+  let store: StoreOf<TaskList> = .init(
+    initialState: .showAddTaskAlert
+  ) {
+    TaskList(
+      taskListUseCase: TaskListUseCaseSuccessMock()
+    )
+  }
+  return TaskListView(store: store)
+}
+
+#Preview {
+  let store: StoreOf<TaskList> = .init(
+    initialState: .showDeleteAllTasksAlert
   ) {
     TaskList(
       taskListUseCase: TaskListUseCaseSuccessMock()

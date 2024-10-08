@@ -7,11 +7,17 @@ public struct TaskList {
   public struct State: Equatable {
     /// The current network state for the feature
     public var networkState: NetworkState<[Task], Task.Error>
+    public var showAddTaskAlert: Bool
+    public var showDeleteAllTasksAlert: Bool
 
     public init(
-      networkState: NetworkState<[Task], Task.Error>
+      networkState: NetworkState<[Task], Task.Error>,
+      showAddTaskAlert: Bool = false,
+      showDeleteAllTasksAlert: Bool = false
     ) {
       self.networkState = networkState
+      self.showAddTaskAlert = showAddTaskAlert
+      self.showDeleteAllTasksAlert = showDeleteAllTasksAlert
     }
   }
 
@@ -23,6 +29,8 @@ public struct TaskList {
     case didTapOnDeleteAllTasks
     case didTapOnDeleteTask(Task)
     case onAppear
+    case setShowAddTaskAlert(Bool)
+    case setShowDeleteAllTasksAlert(Bool)
   }
 
   private let taskListUseCase: TaskListUseCase
@@ -54,6 +62,12 @@ public struct TaskList {
 
         state.networkState = .loading
         return self.loadEffect()
+      case .setShowAddTaskAlert(let showAlert):
+        state.showAddTaskAlert = showAlert
+        return .none
+      case .setShowDeleteAllTasksAlert(let showAlert):
+        state.showDeleteAllTasksAlert = showAlert
+        return .none
       }
     }
   }

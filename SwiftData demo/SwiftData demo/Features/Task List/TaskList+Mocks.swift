@@ -6,6 +6,10 @@ extension TaskList.State {
   static let success = Self(networkState: .completed(.success(.mock)))
 
   static let failure = Self(networkState: .completed(.failure(.cannotLoadTasks(error: "error"))))
+
+  static let showAddTaskAlert = Self(networkState: .completed(.success(.mock)), showAddTaskAlert: true)
+
+  static let showDeleteAllTasksAlert = Self(networkState: .completed(.success(.mock)), showDeleteAllTasksAlert: true)
 }
 
 extension Array where Element == Task {
