@@ -1,5 +1,10 @@
 import Foundation
 
+/// A structure representing a task.
+///
+/// The `Task` struct conforms to `Equatable`, `Identifiable`, and `Hashable` protocols.
+/// It contains a unique identifier (`id`) and a title (`title`).
+/// The initializer generates a unique `id` by hashing a combination of the current timestamp and the title (with spaces removed).
 public struct Task: Equatable, Identifiable, Hashable {
   public let id: String
   let title: String
@@ -21,21 +26,34 @@ public struct Task: Equatable, Identifiable, Hashable {
 }
 
 // MARK: Errors
+
+/// An enumeration representing possible errors that can occur with tasks.
 extension Task {
   public enum Error: Swift.Error, Equatable {
-    case cannotLoadTasks(error: String)
-    case cannotSaveTask(error: String)
-    case cannotDeleteAllTasks(error: String)
+    case cannotLoadTasks(error: String)  // Error when tasks cannot be loaded
+    case cannotSaveTask(error: String)  // Error when a task cannot be saved
+    case cannotDeleteAllTasks(error: String)  // Error when all tasks cannot be deleted
   }
 }
 
 public protocol TaskListUseCase {
+  /// Fetches the list of tasks asynchronously.
+  /// - Returns: A `Result` containing an array of `Task` on success or a `Task.Error` on failure.
   func fetchTaskList() async -> Result<[Task], Task.Error>
+  /// Saves a given task asynchronously.
+  /// - Parameter task: The `Task` to be saved.
+  /// - Returns: A `Result` indicating success or a `Task.Error` on failure.
   func saveTask(_ task: Task) async -> Result<Bool, Task.Error>
+  /// Deletes a specified task asynchronously.
+  /// - Parameter task: The `Task` to be deleted.
+  /// - Returns: A `Result` indicating success or a `Task.Error` on failure.
   func deleteTask(_ task: Task) async -> Result<Bool, Task.Error>
+  /// Deletes all tasks asynchronously.
+  /// - Returns: A `Result` indicating success or a `Task.Error` on failure.
   func deleteAllTasks() async -> Result<Bool, Task.Error>
 }
 
+/// An implementation of the `TaskListUseCase` protocol for managing tasks.
 public struct TaskListUseCaseImpl: TaskListUseCase {
   let databaseManager: DatabaseManager
 

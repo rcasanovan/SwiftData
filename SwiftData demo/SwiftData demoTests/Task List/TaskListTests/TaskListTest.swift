@@ -60,7 +60,11 @@ struct TaskListTest {
     }
 
     // Then
-    await store.receive(.didReceiveError(.cannotLoadTasks(error: "The operation couldn’t be completed. ( error 0.)")))
+    await store.receive(.didReceiveError(.cannotLoadTasks(error: "The operation couldn’t be completed. ( error 0.)"))) {
+      $0.networkState = .completed(
+        .failure(.cannotLoadTasks(error: "The operation couldn’t be completed. ( error 0.)"))
+      )
+    }
   }
 
   @Test @MainActor
