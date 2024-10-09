@@ -15,11 +15,11 @@ struct TaskListView: View {
   private var content: some View {
     switch store.networkState {
     case .loading:
-      EmptyView()
+      loadingState()
     case .completed(.success(let tasks)):
-      success(with: tasks)
-    case .completed(.failure(_)):
-      EmptyView()
+      successState(with: tasks)
+    case .completed(.failure(let error)):
+      failureState(with: error.localizedDescription)
     case .ready:
       Color.clear
     }
@@ -86,7 +86,37 @@ struct TaskListView: View {
 
 // MARK: - States
 extension TaskListView {
-  fileprivate func success(with tasks: [Task]) -> some View {
+  fileprivate func loadingState() -> some View {
+    ZStack(alignment: .top) {
+      List {
+        Spacer().frame(height: 36)
+        ForEach(0..<15, id: \.self) { _ in
+          TaskView(taskTitle: "Placeholder title")
+            .listRowBackground(Color.white)
+            .redacted(reason: .placeholder)
+        }
+        .listRowSeparator(.visible)
+      }
+      .listStyle(PlainListStyle())
+      .background(Color.white)
+      .scrollContentBackground(.hidden)
+
+      // Sticky Header
+      HeaderView(
+        deleteAllOnTap: {
+          store.send(.setShowDeleteAllTasksAlert(true))
+        },
+        addNewTaskOnTap: {
+          store.send(.setShowAddTaskAlert(true))
+        }
+      )
+      .background(.white)
+      .disabled(true)
+    }
+    .background(.white)
+  }
+
+  fileprivate func successState(with tasks: [Task]) -> some View {
     ZStack(alignment: .top) {
       List {
         Spacer().frame(height: 36)
@@ -120,6 +150,11 @@ extension TaskListView {
     }
     .background(.white)
   }
+
+  fileprivate func failureState(with error: String) -> some View {
+    Text(error)
+      .foregroundColor(.black)
+  }
 }
 
 extension TaskListView {
@@ -151,6 +186,17 @@ extension TaskListView {
 
 // MARK: Previews
 
+/// Provides a set of previews for `TaskListView` in different predefined states.
+///
+/// This struct encapsulates the `TaskListView` within a `Preview` view that takes a `StoreOf<TaskList>`
+/// to display the task list UI based on different initial states for testing.
+///
+/// # Preview Definitions:
+/// - `success`: Displays `TaskListView` in a state where tasks were successfully loaded.
+/// - `failure`: Displays `TaskListView` in a state where loading tasks failed.
+/// - `loading`: Displays `TaskListView` in a loading state where tasks are being fetched.
+/// - `showAddTaskAlert`: Displays `TaskListView` with an alert for adding a new task.
+/// - `showDeleteAllTasksAlert`: Displays `TaskListView` with an alert for deleting all tasks.
 struct TaskListView_Preview {
   struct Preview: View {
     var store: StoreOf<TaskList>

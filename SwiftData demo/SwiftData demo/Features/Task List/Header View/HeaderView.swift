@@ -1,5 +1,10 @@
 import SwiftUI
 
+/// A view representing the header section of the task list.
+///
+/// The `HeaderView` contains buttons for deleting all tasks and adding a new task,
+/// as well as a title displaying the demo name. It provides a user interface
+/// element for managing tasks and enhancing user interaction in the task list.
 struct HeaderView: View {
   let deleteAllOnTap: (() -> Void)
   let addNewTaskOnTap: (() -> Void)
@@ -42,6 +47,11 @@ struct HeaderView: View {
 
 // MARK: Previews
 
+/// A preview for `HeaderView` to visualize the view during development.
+///
+/// This struct provides a sample instance of `HeaderView` with empty closures
+/// for the button actions, allowing developers to see the header layout without
+/// executing any functionality.
 struct HeaderView_Preview {
   struct Preview: View {
     var body: some View {

@@ -1,5 +1,12 @@
 #if DEBUG
 
+/// Predefined states for the `TaskList.State` to simplify testing and initialization.
+///
+/// - `loading`: Represents the state where tasks are being loaded, with `networkState` set to `.loading`.
+/// - `success`: Represents the state where tasks were successfully loaded, with `networkState` set to `.completed` with mock data.
+/// - `failure`: Represents the state where task loading failed, with `networkState` set to `.completed` with an error.
+/// - `showAddTaskAlert`: Represents the state where the alert for adding a new task is visible.
+/// - `showDeleteAllTasksAlert`: Represents the state where the alert for deleting all tasks is visible.
 extension TaskList.State {
   static let loading = Self(networkState: .loading)
 
