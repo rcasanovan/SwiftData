@@ -70,16 +70,20 @@ struct TaskListTest {
   @Test @MainActor
   func testDidReload() async {
     // Given
-    let dataBaseManager = DatabaseManagerMock(
-      fetchResult: .success([
-        TaskModel(id: "1", title: "Task 1"),
-        TaskModel(id: "2", title: "Task 2"),
-      ])
-    )
+    var dataBaseManager = DatabaseManagerMock()
+    dataBaseManager.fetchResult = .success([
+      TaskModel(id: "1", title: "Task 1"),
+      TaskModel(id: "2", title: "Task 2"),
+    ])
     let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
 
+    let tasks = [
+      Task(id: "1", title: "Task 1"),
+      Task(id: "2", title: "Task 2"),
+    ]
+
     let store = TestStore(
-      initialState: TaskList.State(networkState: .ready)
+      initialState: TaskList.State(networkState: .completed(.success(tasks)))
     ) {
       TaskList(taskListUseCase: useCase)
     }
@@ -87,15 +91,8 @@ struct TaskListTest {
     // When
     await store.send(.didReload)
 
-    let tasks = [
-      Task(id: "1", title: "Task 1"),
-      Task(id: "2", title: "Task 2"),
-    ]
-
     // Then
-    await store.receive(.didReceiveTaskList(tasks)) {
-      $0.networkState = .completed(.success(tasks))
-    }
+    await store.receive(.didReceiveTaskList(tasks))
   }
 
   @Test @MainActor
@@ -134,18 +131,22 @@ struct TaskListTest {
   @Test @MainActor
   func testDidTapOnDeleteAllTasks() async {
     // Given
-    var dataBaseManager = DatabaseManagerMock()
-    dataBaseManager.deleteAllResult = .success(true)
-    dataBaseManager.fetchResult = .success([])
+    let dataBaseManager = DatabaseManagerMock(
+      fetchResult: .success([]),
+      deleteAllResult: .success(true)
+    )
     let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
 
+    let tasks = [
+      Task(id: "1", title: "Task 1"),
+      Task(id: "2", title: "Task 2"),
+    ]
+
     let store = TestStore(
-      initialState: TaskList.State(networkState: .ready)
+      initialState: TaskList.State(networkState: .completed(.success(tasks)))
     ) {
       TaskList(taskListUseCase: useCase)
     }
-
-    let tasks: [Task] = []
 
     // When
     await store.send(.didTapOnDeleteAllTasks)
@@ -153,7 +154,7 @@ struct TaskListTest {
     // Then
     await store.receive(.didReload)
 
-    await store.receive(.didReceiveTaskList(tasks)) {
+    await store.receive(.didReceiveTaskList([])) {
       $0.networkState = .completed(.success([]))
     }
   }
@@ -161,27 +162,84 @@ struct TaskListTest {
   @Test @MainActor
   func testDidTapOnDeleteTask() async {
     // Given
-    var dataBaseManager = DatabaseManagerMock()
-    dataBaseManager.deleteResult = .success(true)
-    dataBaseManager.fetchResult = .success([])
+    let dataBaseManager = DatabaseManagerMock(
+      fetchResult: .success([
+        TaskModel(id: "2", title: "Task 2")
+      ]),
+      deleteResult: .success(true)
+    )
     let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
 
+    let task1 = Task(id: "1", title: "Task 1")
+    let tasks = [
+      task1,
+      Task(id: "2", title: "Task 2"),
+    ]
+
+    let tasksAfterDelete = [
+      Task(id: "2", title: "Task 2")
+    ]
+
     let store = TestStore(
-      initialState: TaskList.State(networkState: .ready)
+      initialState: TaskList.State(networkState: .completed(.success(tasks)))
     ) {
       TaskList(taskListUseCase: useCase)
     }
 
-    let tasks: [Task] = []
-
     // When
-    await store.send(.didTapOnDeleteTask(Task(id: "1", title: "Task 1")))
+    await store.send(.didTapOnDeleteTask(task1))
 
     // Then
     await store.receive(.didReload)
 
-    await store.receive(.didReceiveTaskList(tasks)) {
-      $0.networkState = .completed(.success(tasks))
+    await store.receive(.didReceiveTaskList(tasksAfterDelete)) {
+      $0.networkState = .completed(.success(tasksAfterDelete))
+    }
+  }
+
+  @Test @MainActor
+  func testSetShowAddTaskAlert() async {
+    // Given
+    let dataBaseManager = DatabaseManagerMock()
+    let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
+
+    let tasks = [
+      Task(id: "1", title: "Task 1"),
+      Task(id: "2", title: "Task 2"),
+    ]
+
+    let store = TestStore(
+      initialState: TaskList.State(networkState: .completed(.success(tasks)))
+    ) {
+      TaskList(taskListUseCase: useCase)
+    }
+
+    // When
+    await store.send(.setShowAddTaskAlert(true)) {
+      $0.showAddTaskAlert = true
+    }
+  }
+
+  @Test @MainActor
+  func testSetShowDeleteAllTasksAlert() async {
+    // Given
+    let dataBaseManager = DatabaseManagerMock()
+    let useCase = TaskListUseCaseImpl(databaseManager: dataBaseManager)
+
+    let tasks = [
+      Task(id: "1", title: "Task 1"),
+      Task(id: "2", title: "Task 2"),
+    ]
+
+    let store = TestStore(
+      initialState: TaskList.State(networkState: .completed(.success(tasks)))
+    ) {
+      TaskList(taskListUseCase: useCase)
+    }
+
+    // When
+    await store.send(.setShowDeleteAllTasksAlert(true)) {
+      $0.showDeleteAllTasksAlert = true
     }
   }
 }
