@@ -6,6 +6,7 @@ import SwiftUI
 /// as well as a title displaying the demo name. It provides a user interface
 /// element for managing tasks and enhancing user interaction in the task list.
 struct HeaderView: View {
+  let isDeleteAllDisabled: Bool
   let deleteAllOnTap: (() -> Void)
   let addNewTaskOnTap: (() -> Void)
 
@@ -19,6 +20,7 @@ struct HeaderView: View {
             .font(.title2)
         }
         .padding(.leading)
+        .disabled(isDeleteAllDisabled)
 
         Spacer()
 
@@ -54,8 +56,11 @@ struct HeaderView: View {
 /// executing any functionality.
 struct HeaderView_Preview {
   struct Preview: View {
+    let isDeleteAllDisabled: Bool
+
     var body: some View {
       HeaderView(
+        isDeleteAllDisabled: isDeleteAllDisabled,
         deleteAllOnTap: {},
         addNewTaskOnTap: {}
       )
@@ -65,6 +70,15 @@ struct HeaderView_Preview {
 
 #Preview {
   HeaderView(
+    isDeleteAllDisabled: false,
+    deleteAllOnTap: {},
+    addNewTaskOnTap: {}
+  )
+}
+
+#Preview {
+  HeaderView(
+    isDeleteAllDisabled: true,
     deleteAllOnTap: {},
     addNewTaskOnTap: {}
   )

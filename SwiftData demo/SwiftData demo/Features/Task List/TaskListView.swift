@@ -103,6 +103,7 @@ extension TaskListView {
 
       // Sticky Header
       HeaderView(
+        isDeleteAllDisabled: true,
         deleteAllOnTap: {
           store.send(.setShowDeleteAllTasksAlert(true))
         },
@@ -139,6 +140,7 @@ extension TaskListView {
 
       // Sticky Header
       HeaderView(
+        isDeleteAllDisabled: tasks.isEmpty,
         deleteAllOnTap: {
           store.send(.setShowDeleteAllTasksAlert(true))
         },
