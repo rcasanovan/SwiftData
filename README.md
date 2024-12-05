@@ -32,6 +32,13 @@ How to not only test a feature built in the architecture, but also write integra
 
 How to accomplish all of the above in a simple API with as few concepts and moving parts as possible.
 
+## Snapshots - Task List view
+<p float="left">
+  <img src="https://github.com/rcasanovan/astropics/blob/main/Images/Simulator%20Screenshot%20-%20iPhone%2015%20Pro%20-%202024-06-13%20at%2017.13.04.png" width="250" />
+  <img src="https://github.com/rcasanovan/astropics/blob/main/Images/Simulator%20Screenshot%20-%20iPhone%2015%20Pro%20-%202024-06-13%20at%2017.13.10.png" width="250" />
+  <img src="https://github.com/rcasanovan/astropics/blob/main/Images/Simulator%20Screenshot%20-%20Clone%201%20of%20iPhone%2015%20Pro%20-%202024-08-20%20at%2022.57.14.png" width="250" />
+  <img src="https://github.com/rcasanovan/astropics/blob/main/Images/Simulator%20Screenshot%20-%20iPhone%2015%20Pro%20-%202024-06-13%20at%2017.22.35.png" width="250" /> 
+</p>
 
 ## Additional tools / technologies
 * [Swift-format](https://github.com/apple/swift-format): swift-format provides the formatting technology for SourceKit-LSP and the building blocks for doing code formatting transformations.
