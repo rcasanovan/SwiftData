@@ -47,3 +47,5 @@ How to accomplish all of the above in a simple API with as few concepts and movi
 
 ## Additional tools / technologies
 * [Swift-format](https://github.com/apple/swift-format): swift-format provides the formatting technology for SourceKit-LSP and the building blocks for doing code formatting transformations.
+* SwiftData: SwiftData is Apple's framework introduced to simplify the management of persistent data in Swift apps. It leverages the Swift language and integrates seamlessly with SwiftUI, offering an easier, more developer-friendly alternative to Core Data, which has traditionally been used for managing complex data models and relationships in iOS/macOS apps.
+* Testing: a new native framework introduced by Apple to simplify and modernize the way tests are written in Swift. This framework complements XCTest and is designed to align closely with the Swift language's features, offering a more expressive and Swift-centric way to write tests. It moves away from the more verbose, Objective-C-inspired syntax of XCTest.
