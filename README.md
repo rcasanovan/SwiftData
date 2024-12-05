@@ -32,6 +32,11 @@ How to not only test a feature built in the architecture, but also write integra
 
 How to accomplish all of the above in a simple API with as few concepts and moving parts as possible.
 
+## Data flow
+<p float="center">
+  <img src="https://github.com/rcasanovan/SwiftData/blob/main/Images/TCA_image.001.jpeg"/>
+</p>
+
 ## Snapshots - Task List view
 <p float="left">
   <img src="https://github.com/rcasanovan/SwiftData/blob/main/Images/Simulator%20Screenshot%20-%20iPhone%2016%20Pro%20-%202024-12-05%20at%2015.57.08.png" width="250" />
