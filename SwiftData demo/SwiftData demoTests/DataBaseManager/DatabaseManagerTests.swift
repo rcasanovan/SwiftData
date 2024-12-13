@@ -8,16 +8,16 @@ struct DatabaseManagerTests {
   var databaseManager: DatabaseManagerImp!
 
   init() {
-    // Configuración inicial para cada test
+    // Initial setup for each test
     let schema = Schema([TaskModel.self])
     let modelConfiguration = ModelConfiguration(
       schema: schema,
-      isStoredInMemoryOnly: true  // Almacenar solo en memoria para los tests
+      isStoredInMemoryOnly: true  // Store only in memory for tests
     )
     databaseManager = DatabaseManagerImp(schema: schema, modelConfiguration: modelConfiguration)
   }
 
-  // Test para guardar un modelo
+  // Test for saving a model
   @Test
   func testSaveModel() async throws {
     let task = TaskModel(id: "1", title: "Test Task", createdAt: Date().timeIntervalSince1970)
@@ -26,59 +26,59 @@ struct DatabaseManagerTests {
 
     switch result {
     case .success(let isSaved):
-      #expect(isSaved == true, "El modelo debería guardarse correctamente")
+      #expect(isSaved == true, "The model should be saved successfully")
     case .failure(let error):
-      throw error  // Si hubo un error, lanzar la excepción para que falle la prueba
+      throw error  // If there was an error, throw the exception to fail the test
     }
   }
 
-  // Test para obtener un modelo ordenado
+  // Test for fetching an ordered model
   @Test
   func testFetchModel() async throws {
-    // Guarda un modelo primero
+    // Save a model first
     let task = TaskModel(id: "1", title: "Fetch Task", createdAt: Date().timeIntervalSince1970)
     _ = await databaseManager.save(model: task)
 
-    // Intenta obtener el modelo
+    // Attempt to fetch the model
     let result = await databaseManager.fetch(ofType: TaskModel.self, sortBy: \.createdAt, ascending: true)
 
     switch result {
     case .success(let models):
-      #expect(models.count == 1, "Debería haber un solo modelo guardado")
-      #expect(models.first?.title == "Fetch Task", "El título del modelo debería ser correcto")
+      #expect(models.count == 1, "There should be only one saved model")
+      #expect(models.first?.title == "Fetch Task", "The model title should be correct")
     case .failure(let error):
-      throw error  // Si hay un error, lanzar una excepción
+      throw error  // If there was an error, throw an exception
     }
   }
 
-  // Test para eliminar un modelo por ID
+  // Test for deleting a model by ID
   @Test
   func testDeleteModel() async throws {
     let task = TaskModel(id: "1", title: "Task to Delete", createdAt: Date().timeIntervalSince1970)
     _ = await databaseManager.save(model: task)
 
-    // Intenta eliminar el modelo por ID
+    // Attempt to delete the model by ID
     let deleteResult = await databaseManager.delete(ofType: TaskModel.self, withId: "1")
 
     switch deleteResult {
     case .success(let isDeleted):
-      #expect(isDeleted == true, "El modelo debería eliminarse correctamente")
+      #expect(isDeleted == true, "The model should be deleted successfully")
     case .failure(let error):
-      throw error  // Si hubo un error, lanzar la excepción para que falle la prueba
+      throw error  // If there was an error, throw the exception to fail the test
     }
 
-    // Verifica que no haya más modelos en la base de datos
+    // Verify there are no more models in the database
     let fetchResult = await databaseManager.fetch(ofType: TaskModel.self, sortBy: \.createdAt, ascending: true)
 
     switch fetchResult {
     case .success(let models):
-      #expect(models.count == 0, "No debería haber modelos después de la eliminación")
+      #expect(models.count == 0, "There should be no models after deletion")
     case .failure(let error):
       throw error
     }
   }
 
-  // Test para eliminar todos los modelos
+  // Test for deleting all models
   @Test
   func testDeleteAllModels() async throws {
     let task1 = TaskModel(id: "1", title: "Task 1", createdAt: Date().timeIntervalSince1970)
@@ -87,22 +87,22 @@ struct DatabaseManagerTests {
     _ = await databaseManager.save(model: task1)
     _ = await databaseManager.save(model: task2)
 
-    // Eliminar todos los modelos
+    // Delete all models
     let deleteAllResult = await databaseManager.deleteAll(ofType: TaskModel.self)
 
     switch deleteAllResult {
     case .success(let deletedAll):
-      #expect(deletedAll == true, "Todos los modelos deberían eliminarse correctamente")
+      #expect(deletedAll == true, "All models should be deleted successfully")
     case .failure(let error):
-      throw error  // Si hubo un error, lanzar la excepción para que falle la prueba
+      throw error  // If there was an error, throw the exception to fail the test
     }
 
-    // Verifica que no haya modelos después de la eliminación
+    // Verify there are no models after deletion
     let fetchResult = await databaseManager.fetch(ofType: TaskModel.self, sortBy: \.createdAt, ascending: true)
 
     switch fetchResult {
     case .success(let models):
-      #expect(models.count == 0, "No debería haber modelos después de eliminar todos")
+      #expect(models.count == 0, "There should be no models after deleting all")
     case .failure(let error):
       throw error
     }
